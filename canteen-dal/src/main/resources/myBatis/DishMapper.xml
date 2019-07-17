@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shitang.mapper.DishMapper">
+
+    <!-- [通过菜品id查询菜品]  -->
+    <!-- Dishes queryDishesByName(String dishesName);  -->
+    <select id="queryDishesByName" parameterType="Integer" resultType="Dishes">
+        select * from dishes
+        <where>
+            id = #{id}
+        </where>
+    </select>
+
+    <select id="queryDishes" parameterType="HashMap" resultType="Dishes">
+        select
+        *
+        from dishes
+        <where>
+        1=1
+        <if test="categoryId != null and categoryId !=''">and  category_id=#{dishes.categoryId}</if>
+        <if test="dishesName != null and dishesName !=''">and  dishes_name=#{dishes.dishesName}</if>
+        <if test="dishesPrice != null and dishesPrice !=''">and  dishes_price=#{dishes.dishesPrice}</if>
+        </where>
+        limit #{page},#{pageSize}
+    </select>
+
+
+<!--    int totalDishes();  查询菜品总条数-->
+    <select id="totalDishes" resultType="int">
+        select count(*) from dishes
+    </select>
+</mapper>
